@@ -1,0 +1,29 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 20px;
+}
+
+#timeline {
+    margin: 0 auto;
+    width: 90%;
+    max-width: 1200px;
+}
+
+svg {
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.event {
+    fill: #007bff;
+    stroke: #0056b3;
+    stroke-width: 1.5;
+}
+
+.label {
+    font-size: 12px;
+    fill: #333;
+    font-weight: bold;
+}

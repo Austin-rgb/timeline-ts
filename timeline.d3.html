@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Timeline with D3.js</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .axis line {
+            stroke: #000;
+        }
+        .axis path {
+            display: none;
+        }
+        .tick text {
+            font-size: 12px;
+        }
+        .event {
+            fill: steelblue;
+            stroke: #000;
+        }
+    </style>
+</head>
+<body>
+    <svg width="800" height="200"></svg>
+    <script>
+        const data = [
+            { date: new Date(2023, 0, 1), event: "New Year's Day" },
+            { date: new Date(2023, 1, 14), event: "Valentine's Day" },
+            { date: new Date(2023, 3, 1), event: "April Fool's Day" },
+            { date: new Date(2023, 11, 25), event: "Christmas Day" }
+        ];
+
+        const margin = { top: 20, right: 20, bottom: 30, left: 50 };
+        const width = 800 - margin.left - margin.right;
+        const height = 200 - margin.top - margin.bottom;
+
+        const svg = d3.select("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        const x = d3.scaleTime()
+            .domain(d3.extent(data, d => d.date))
+            .range([0, width]);
+
+        const xAxis = d3.axisBottom(x);
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", `translate(0,${height})`)
+            .call(xAxis);
+
+        svg.selectAll(".event")
+            .data(data)
+            .enter().append("circle")
+            .attr("class", "event")
+            .attr("cx", d => x(d.date))
+            .attr("cy", height / 2)
+            .attr("r", 5);
+
+        svg.selectAll(".label")
+            .data(data)
+            .enter().append("text")
+            .attr("class", "label")
+            .attr("x", d => x(d.date))
+            .attr("y", height / 2 - 10)
+            .attr("text-anchor", "middle")
+            .text(d => d.event);
+    </script>
+</body>
+</html>
